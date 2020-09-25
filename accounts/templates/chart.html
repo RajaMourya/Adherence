@@ -1,0 +1,225 @@
+{% extends 'details.html' %}
+{% load static %}
+
+
+{% block chart %}
+<div style="margin:0% 75% 1% 0%;width:37%;font:monospace;">
+    <h6 style="float:left;background-color: #ebebe0;padding : 9px;border-radius:30px;box-shadow : 6px 6px 10px #888888;"> Medication : {{pat.medical}}%</h6>
+    <h6 style="float:right;background-color: #ebebe0;padding : 9px;border-radius:30px;box-shadow : 4px 4px 10px #888888;"> Treatment : {{pat.treatment}}%</h6>
+
+</div>
+
+<div style="margin:4% 15%;width:100%;">
+    <div style="float:left;width:45%;background-color:white;border-radius:25px;padding:10px;box-shadow: 4px 4px 8px #888888">
+    <canvas id="pie-chart1"></canvas>
+    </div>
+    <div style="float:right;width:45%;background-color:white;border-radius:25px;padding:10px;box-shadow: 4px 4px 8px #888888">
+    <canvas id="pie-chart2"></canvas>
+    </div>
+</div>
+<div style="margin:30% 15%;width:100%;">
+    <div style="float:left;width:45%;background-color:white;border-radius:25px;padding:10px;box-shadow: 4px 4px 8px #888888">
+    <canvas id="pie-chart3"></canvas>
+    </div>
+    <div style="float:right;width:45%;background-color:white;border-radius:25px;padding:10px;box-shadow: 4px 4px 8px #888888">
+    <canvas id="pie-chart4"></canvas>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var config1 = {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: {{ fast|safe }},
+          backgroundColor: [
+            '#34C8B3 '
+          ],
+          label: 'Fasting blood sugar'
+        },{
+          data: {{ random|safe }},
+          backgroundColor: [
+            '#F59C76','#F59C76','#F59C76','#F59C76','#F59C76','#F59C76','#F59C76'
+          ],
+          label: 'Random blood sugar'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+              scales: {
+        xAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'No. of DAYS'
+          },
+          ticks: {
+            major: {
+              fontStyle: 'bold',
+              fontColor: '#FF0000'
+            }
+          }
+        } ],
+        yAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'mg/dl'
+          }
+        } ]
+      }
+
+
+      }
+    };
+var config2 = {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: {{ med|safe }},
+          backgroundColor: [
+            '#ff9933'
+          ],
+          label: 'Medication'
+        },{
+          data: {{ treatment|safe }},
+          backgroundColor: [
+
+          ],
+          label: 'Treatment'
+        }],
+        labels: {{ meds|safe }}
+      },
+      options: {
+        responsive: true,
+        scales: {
+        xAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'WEEKS'
+          },
+          ticks: {
+            major: {
+              fontStyle: 'bold',
+              fontColor: '#FF0000'
+            }
+          }
+        } ],
+        yAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'ADHERENCE %'
+          }
+        } ]
+      }
+
+      }
+    };
+    var config3 = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ Systolic|safe }},
+          backgroundColor: [
+            '#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A','#DBDB5A'
+          ],
+          label: 'Systolic Pressure'
+        },{
+          data: {{ Diastolic|safe }},
+          backgroundColor: [
+            '#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 ','#86F044 '
+          ],
+          label: 'Diastolic Pressure'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+              scales: {
+        xAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'No. of DAYS'
+          },
+          ticks: {
+            major: {
+              fontStyle: 'bold',
+              fontColor: '#FF0000'
+            }
+          }
+        } ],
+        yAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'mm hg'
+          }
+        } ]
+      }
+
+      }
+    };
+    var config4 = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ steps|safe }},
+          backgroundColor: [
+            '#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff','#cc99ff'
+          ],
+          label: 'No.of steps'
+        }],
+        labels: {{ steplabels|safe }}
+      },
+      options: {
+        responsive: true,
+              scales: {
+        xAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'WEEKS'
+          },
+          ticks: {
+            major: {
+              fontStyle: 'bold',
+              fontColor: '#FF0000'
+            }
+          }
+        } ],
+        yAxes: [ {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'NO. OF STEPS'
+          }
+        } ]
+      }
+
+      }
+    };
+
+
+    window.onload = function() {
+      var ctx1 = document.getElementById('pie-chart1').getContext('2d');
+      var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+      var ctx3 = document.getElementById('pie-chart3').getContext('2d');
+      var ctx4 = document.getElementById('pie-chart4').getContext('2d');
+      window.myPie = new Chart(ctx1, config1);
+      window.myPie = new Chart(ctx2, config2);
+      window.myPie = new Chart(ctx3, config3);
+      window.myPie = new Chart(ctx4, config4);
+
+    };
+
+
+</script>
+
+{% endblock chart %}

@@ -1,0 +1,188 @@
+{% load static %}
+<!doctype html>
+<html lang="en" xmlns:font="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+    <title>Reports of {{pat.first}}</title>
+    <style>
+		body{
+		background-color:#b3cccc;
+
+    }/*
+ CSS for the main interaction
+*/
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+  display: block;
+}
+
+/*
+ Styling
+*/
+body {
+  font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
+  color: #333;
+  font-weight: 300;
+}
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 25px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabset > label::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  width: 22px;
+  height: 4px;
+  background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: #06c;
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+  background: #06c;
+}
+
+.tabset > input:checked + label {
+  border-color: #ccc;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+}
+
+.tab-panel {
+  padding: 30px 0;
+  border-top: 2px solid #476b6b;
+}
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 30px;
+}
+
+.tabset {
+  max-width: 65em;
+}
+
+
+
+    </style>
+    <style>
+    .bio h3{
+    width : 100%;
+    background-color: #476b6b;
+    padding : 10px;
+    color :white;
+    left : 45%;
+    margin:auto;
+    font : monospace;
+    box-shadow : 3px 3px 5px #888888;
+    border-radius : 15px;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<div class="tabset">
+    <!-- Tab 1 -->
+    <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+    <label for="tab1" style="color:white;"><h5>DETAILED REPORTS</h5></label>
+    <!-- Tab 2 -->
+    <!-- Tab 3 -->
+    <input type="radio" name="tabset" id="tab3" aria-controls="dunkles">
+    <label for="tab3" style="color:white;"><h5>CONTACT</h5></label>
+
+    <div class="tab-panels">
+        <section id="marzen" class="tab-panel">
+            {% block chart %}
+            {% endblock chart %}
+        </section>
+        <section id="dunkles" class="tab-panel">
+            <div class="bio" style="float:left">
+                <h3 class="text-monospace">USERNAME : {{pat.first}} {{pat.last}}</h3><br>
+                <h3 class="text-monospace">ID : {{pat.id}}</h3><br>
+                <h3 class="text-monospace">BLOOD GROUP : {{pat.blood}}</h3><br>
+                <h3 class="text-monospace">Contact : {{pat.contact}}</h3> <br>
+                <h3 class="text-monospace">EMAIL : {{pat.email}}</h3><br>
+            </div>
+            <div class="bio" style="float:right">
+                <h3 class="text-monospace">EMERGENCY : {{pat.emergency}}</h3><br>
+                <h3 class="text-monospace">ADDRESS : {{pat.address}}</h3><br>
+                <h3 class="text-monospace">TOWN/CITY : {{pat.town}}</h3><br>
+                <h3 class="text-monospace">ZIPCODE : {{pat.zipcode}}</h3><br>
+                <div style="float:left;">
+                    <a href='mailto:{{pat.email}}?Subject=ADHERENCE' target="_blank">
+                        <button type="submit" class="btn btn-outline-success" style="width:160px;">
+                            Mail to Patient
+                        </button>
+                    </a>
+                </div>
+                <div style="float:right">
+                    <a href='mailto:{{pat.emergency}}?Subject=EMERGENCY' target="_blank">
+                        <button type="submit" class="btn btn-outline-danger" style="width:175px;">
+                            Mail to Emergency
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+</body>
+</html>

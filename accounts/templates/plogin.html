@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block resp %}
+
+    <div class="loginbox">
+    <img src="{% static 'avatar.png' %}" class="avatar">
+        <h1>Login Here</h1>
+        <form action="{% url 'plogincheck' %}" method="post">
+            {% csrf_token %}
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter Username">
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter Password">
+            <input type="submit" name="" value="Login">
+            <a href="#">Forgot Password?</a><br>
+            <a href="{% url 'pcreate' %}">New User?</a>
+        </form>
+
+    </div>
+{% endblock resp  %}

@@ -1,0 +1,364 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'login_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'create_style.css' %}">
+
+    <title>Heathcare</title>
+    <style>
+/*
+ CSS for the main interaction
+*/
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+  display: block;
+}
+
+/*
+ Styling
+*/
+body {
+  font: 16px/1.5em "Overpass", "Open Sans", Helvetica, sans-serif;
+  color: #333;
+  font-weight: 300;
+}
+
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 25px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabset > label::after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+  width: 22px;
+  height: 4px;
+  background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: #06c;
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+  background: #06c;
+}
+
+.tabset > input:checked + label {
+  border-color: #ccc;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+}
+
+.tab-panel {
+  padding: 30px 0;
+  border-top: 1px solid #ccc;
+}
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 30px;
+}
+
+.tabset {
+  max-width: 65em;
+
+}
+label
+{
+width:240px;
+display:inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+    <style>
+.content {
+
+  max-width: 500px;
+  margin: auto;
+}
+
+
+
+
+
+
+
+
+
+
+    </style>
+
+    <style>
+    body{
+      background-image: url(https://images.unsplash.com/photo-1546387903-6d82d96ccca6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+
+<div class="tabset">
+    <!-- Tab 1 -->
+    <input type="radio" name="tabset" id="tab2" aria-controls="marzen" checked>
+    <label for="tab2" style="color:black"><h5>My Patients</h5></label>
+    <!-- Tab 2 -->
+    <input type="radio" name="tabset" id="tab1" aria-controls="rauchbier">
+    <label for="tab1" style="color:black"><h5>Add patient</h5></label>
+    <a href="{% url 'plogout' %}">
+        <button type="submit" class="btn btn-outline-danger">logout</button>
+    </a>
+
+    <div class="tab-panels">
+        <section id="My Patients" class="tab-panel">
+            <h2 style="color:black">Patient's Adherence Scores</h2>
+
+            <div class="container" style="width:100%;margin:0% 10% 10% 25%;">
+                <div style=";width:800px;float:left;background-color: #e0ebeb;border-radius:20px;">
+                    <nav class="navbar navbar-light bg-light" style="border-radius:20px;">
+                        <form class="form-inline" action="{% url 'search' %}" method="post">
+                            {% csrf_token %}
+                            <input class="form-control mr-sm-2" name="target" type="search" placeholder="Search"
+                                   aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </nav>
+                    <br>
+                    {% csrf_token %}
+                    <table style="margin:auto;width:700px;">
+                        <tr style="border:2px solid #639c9c">
+                            <th style="padding:10px;">
+                                ID
+                            </th>
+                            <th>
+                                NAME
+                            </th>
+                            <th>
+                                (Age, Gender)
+                            </th>
+                            <th>
+                                SCORE
+                            </th>
+                        </tr>
+                        {% for pat in page_obj %}
+                        <tr style="border:2px solid #639c9c">
+                            <td style="padding:10px;">{{pat.id}}</td>
+                            <td>{{pat.first}} {{pat.last}}</td>
+                            <td>({{pat.age}}, {{pat.gender}})</td>
+                            <td>
+                                <a href="{% url 'details' pat.id %}" target="_blank">
+                                    {% csrf_token %}
+                                    {% if pat.total > 80 %}
+                                    <button type="button" class="btn btn-success">
+                                        {{pat.total}}%
+                                    </button>
+                                    {% elif pat.total < 60 %}
+                                    <button type="button" class="btn btn-danger">
+                                        {{pat.total}}%
+                                    </button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-warning">
+                                        {{pat.total}}%
+                                    </button>
+                                    {% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <br>
+                    <nav aria-label="..." style="margin:0% 7% 0% 0%;float:right;">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item ">
+                                <a class="page-link" href="?page={{ page_number|add:'-1' }}">Previous</a>
+                            </li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                            <li class="page-item {% if i == page_number  %}  active {% endif %}">
+                                <a class="page-link" href="?page={{ i }}">{{i}}</a>
+                            </li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li class="page-item ">
+                                <a class="page-link" href="?page={{ page_number|add:'1' }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <div style="float:right;width:200px">
+                    <img src="{% static 'images/LEGEND.png' %}" style="width:60%">
+                </div>
+            </div>
+
+        </section>
+        <section id="Add patient" class="tab-panel">
+            <h2 style="color:black">Enter patient's details</h2>
+
+            <div class="content">
+                <form action="{% url 'createpatient' %}" method="POST">
+                    {% csrf_token %}
+                    <fieldset style="width:1000px">
+                        <div style="padding:30px;background-color:  #e0ebeb;border-radius:30px;">
+                            <div style="float:left">
+                                <label for="first name">First Name :</label>
+                                <input name="b" type="text" required>
+                            </div>
+                            <div style="float:right">
+                                <label for="last name">Last Name :</label>
+                                <input name="c" type="text" required>
+                            </div>
+                            <br>
+                            <br>
+                            <div style="float:left">
+                                <label for="email">Email :</label>
+                                <input name="d" type="text" required>
+                            </div>
+                            <div style="float:right">
+                                <label for="contact no">Contact no. :</label>
+                                <input name="e" type="text" required>
+                            </div>
+                            <br>
+                            <br>
+                            <div style="float:left">
+                                <label for="age">Age :</label>
+                                <input name="f" type="text" required>
+                            </div>
+                            <div style="float:right">
+                                <label for="emergency">Emergency mail :</label>
+                                <input name="i" type="text" required>
+                            </div>
+                            <br>
+                            <br>
+                            <div style="float:left">
+                                <label for="address">Address :</label>
+                                <input name="j" type="text" required>
+                            </div>
+                            <div style="float:right">
+                                <label for="town">Town/City :</label>
+                                <input name="k" type="text" required>
+                            </div>
+                            <br>
+                            <br>
+                            <label for="zipcode">Zip code :</label>
+                            <input name="l" type="text" required>
+                            <br>
+                            <br>
+                            <label for="gender">Gender :</label>
+                            <select name="g" type="text" id="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <br>
+                            <br>
+                            <label for="blood">Blood Group :</label>
+                            <select name="h" type="text" id="blood">
+                                <option value="A+">A+</option>
+                                <option value="B+">B+</option>
+                                <option value="AB+">AB+</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="A-">A-</option>
+                                <option value="B-">B-</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                            <br>
+                            <br>
+                            <input type="submit" class="btn btn-outline-success">
+                        </div>
+                    </fieldset>
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+</body>
+</html>
